@@ -151,7 +151,7 @@ function TopAppBar() {
                     <Box sx={
                         isSearchFocused ?
                             { display: 'none' } :
-                            { width: '300px', display: { xs: 'none', md: 'block' } }} />
+                            { width: '100px', display: { xs: 'none', md: 'block' } }} />
                     <Box
                         sx={{
                             position: 'relative',
