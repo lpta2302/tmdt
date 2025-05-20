@@ -1,17 +1,13 @@
 /* eslint-disable react/prop-types */
-import { Image } from "@mui/icons-material"
-import { Typography } from "@mui/material"
 import { LogoImage } from "../assets"
 
 function Logo(props) {
-    const { margin, variant, fontSize } = props
     return (
         <div 
-            {...props}
             style={
                 {
                     height: '80%',
-                    width:'300px'
+                    width:'228px'
                 }
             }
         >

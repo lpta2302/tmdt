@@ -63,7 +63,9 @@ const BannerSlider = () => {
   const { data: banners, isLoading, isError, error } = useReadAllCarouselAdmin();
   const settings = {
     dots: true,
+    centerMode: true,
     infinite: true,
+    adaptiveHeight: true,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
@@ -77,10 +79,10 @@ const BannerSlider = () => {
   if (isError) return <p>Có lỗi xảy ra: {error.message}</p>;
   return (
     <Slider {...settings}>
-      {banners.map((banner) => (
+      {banners.map((banner, index) => (
         <Link
           to={`/products/${banner.slug}`}
-          key={banner.id}
+          key={banner.id || index}
           style={{ textDecoration: "none" }}
         >
           <Card
@@ -89,7 +91,7 @@ const BannerSlider = () => {
               boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
               borderRadius: "12px",
               textAlign: "center",
-              width: "100%",
+              width: "100%"
             }}
           >
             <CardMedia
@@ -99,6 +101,7 @@ const BannerSlider = () => {
               sx={{
                 display: "flex",
                 justifyContent: "center",
+                alignItems: 'center',
                 margin: "0 auto",
                 width: "100%", // Độ rộng 50% của container
                 height: "auto",

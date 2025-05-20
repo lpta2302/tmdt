@@ -53,7 +53,6 @@ function ManageProduct() {
   const [rows, setRows] = useState()
   const [searchValue, setSearchValue] = useState('')
   const [searchParam, setSearchParam] = useState({})
-  const [detailId, setDetailId] = useState()
 
   
   const { data, isPending: isLoading } = useReadAllProductAdmin();
@@ -61,12 +60,6 @@ function ManageProduct() {
   
   const { mutateAsync: deleteProduct, isPending: isDeleting } = useDeleteProduct();
   const { data: searchResult } = useSearchProductAdmin(searchParam);
-  
-  useEffect(() => {
-    if(data){
-      setDetailId(data[0].specs[2])
-    }
-  }, [data]);
 
   const breadcrumbs = [
     { path: '/', title: 'Home' },

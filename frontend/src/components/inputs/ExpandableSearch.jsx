@@ -44,7 +44,13 @@ export default function ExpandableSearch({ isSearchFocused, setIsSearchFocused, 
     }, [query]);
 
     return (
-        <FormControl sx={{ width: '100%' }} variant="outlined">
+        <FormControl sx={{ 
+            width: '100%',
+            backgroundColor: 'white',
+            '& .MuiOutlinedInput-root': {
+                backgroundColor: 'white !important',    
+            }
+        }} variant="outlined">
             <OutlinedInput
                 size="medium"
                 id="search"

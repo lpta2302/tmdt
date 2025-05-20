@@ -114,10 +114,11 @@ function TopAppBar() {
 
     return (
         <Box component='header' sx={{ display: 'flex', alignItems: 'center' }}>
-            <AppBar color='white' component="nav"
+            <AppBar color='#ffd500' component="nav"
                 sx={{
                     '& .MuiToolbar-root': {
-                        px: '16px'
+                        px: '16px',
+                        backgroundColor: '#ffd500'
                     }
                 }}
             >
@@ -141,7 +142,7 @@ function TopAppBar() {
                                         '&:hover': {
                                             backgroundColor: 'transparent'
                                         },
-                                        minWidth: '200px',
+                                        width: '228px',
                                         textDecoration: 'none'
                                     }}
                         >

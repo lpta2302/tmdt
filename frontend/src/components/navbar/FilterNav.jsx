@@ -1,12 +1,17 @@
+/* eslint-disable react/prop-types */
 import { Box, Button, CircularProgress, Divider, FormControl, Grid2, InputLabel, MenuItem, Select, Stack, TextField, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useReadAllBrand, useReadAllCategory, useReadAllSpecificationAdmin } from '../../api/queries'
 import setDeepState, { } from '../../util/setDeepState'
 
-function FilterNav({ setFilterParams, params }) {
+function FilterNav({ setFilterParams, searchParams }) {
     const setFilter = setDeepState(setFilterParams);
 
-
+    useEffect(
+        ()=>console.log(searchParams),
+        [searchParams]
+    )
+    
     const { data: brands, isLoading: isLoadingBrands } = useReadAllBrand();
     const { data: categories, isLoading: isLoadingCategories } = useReadAllCategory();
     if (isLoadingBrands || isLoadingCategories) return <Box display="flex" justifyContent="center" width="100%">
@@ -21,7 +26,11 @@ function FilterNav({ setFilterParams, params }) {
 
                         return (
                             <Button
-                                key={brand._id} variant='outlined'
+                                key={brand._id} 
+                                variant={
+                                    searchParams['brand']?._id == brand._id?
+                                    'contained' : 'outlined'
+                                }
                                 onClick={() => setFilter('brand', brand)}
                             >
                                 <Typography variant='button'>{brand.brandName}</Typography>
@@ -36,7 +45,10 @@ function FilterNav({ setFilterParams, params }) {
                         return (
                             <Button
                                 key={category._id}
-                                variant="outlined"
+                                variant={
+                                    searchParams['category']?._id == category._id?
+                                    'contained' : 'outlined'
+                                }
                                 onClick={() => setFilter("category", category)}
                             >
                                 <Typography

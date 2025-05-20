@@ -44,16 +44,11 @@ function GridProduct() {
     setSearchParams(params);
   }, []);
 
-  useEffect(() => {
-    console.log(searchParams);
-
-  }, [searchParams]);
-
   if(searchError || wishListError) return <Typography mx='auto'>Something went wrong</Typography>
 
   return (
     <Box>
-      <FilterNav setFilterParams={setSearchParams} />
+      <FilterNav setFilterParams={setSearchParams} searchParams={searchParams}/>
       <Grid2 container spacing={2}> {/* Use Grid for layout */}
         {
           isLoadingWishlist || isSearching ?
