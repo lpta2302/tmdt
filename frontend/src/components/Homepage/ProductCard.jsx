@@ -51,6 +51,7 @@ const ProductCard = ({ product, wishList, customer, isLoggedIn }) => {
 
 
   }
+  
   return (
     <Card
       sx={{
@@ -59,7 +60,7 @@ const ProductCard = ({ product, wishList, customer, isLoggedIn }) => {
         margin: "0 auto",
         display: "flex",
         flexDirection: "column",
-        height: "480px", // Chiều cao cố định cho các thẻ card
+        height: "400px", // Chiều cao cố định cho các thẻ card
       }}
     >
       <Link
@@ -87,7 +88,7 @@ const ProductCard = ({ product, wishList, customer, isLoggedIn }) => {
           }}
         >
           <Box>
-            <TruncatedTypography lineClamp={2} variant="h6" fontSize='1rem' lineHeight="1.2" mb={0.2} component="div">
+            <TruncatedTypography lineClamp={2} variant="content" fontSize='0.8rem' lineHeight="1.2" mb={0.2} component="div">
               {product.productName}
             </TruncatedTypography>
             <TruncatedTypography
@@ -103,15 +104,14 @@ const ProductCard = ({ product, wishList, customer, isLoggedIn }) => {
             fontSize="0.8rem"
             variant="body1"
             style={{
-              color: product.productStatus === "available" ? "green" : "red",
+              color: product.productStatus !== "active" ?  "red" : "green",
             }}
           >
-            Trạng thái:{" "}
-            {product.productStatus === "available" ? "Còn hàng" : "Hết hàng"}
+            {product.productStatus !== "active" ?  "Hết hàng" : "Còn hàng"}
           </Typography>
           <Typography
-            fontSize="1rem"
-            variant="body1"
+            fontSize="0.8em"
+            variant="h6"
             sx={{
               textDecoration: product.specs[0]?.discountPercentage && 'line-through'
             }}
@@ -126,7 +126,7 @@ const ProductCard = ({ product, wishList, customer, isLoggedIn }) => {
             product.specs[0]?.discountPercentage &&
             <Typography
               fontSize="1rem"
-              variant="body1"
+              variant="h1"
               style={{
                 color: "red"
               }}
@@ -152,7 +152,7 @@ const ProductCard = ({ product, wishList, customer, isLoggedIn }) => {
         >
           {isFavorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
         </IconButton>
-        <Typography variant="body2">Mã: {product.productCode}</Typography>
+        <Typography variant="body2">{product.productCode}</Typography>
       </Box>
     </Card>
   );

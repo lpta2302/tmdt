@@ -13,6 +13,10 @@ import { useAddCartItem, useAddItemToWishlist, useReadAllReviewsAdmin, useReadPr
 import { useAuthContext } from "../../context/AuthContext";
 import { enqueueSnackbar } from "notistack";
 
+const toCurrency = (original) =>
+    new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(original)
+
+
 const ProductGeneralInfo = () => {
   const { slug } = useParams();
 
@@ -20,6 +24,7 @@ const ProductGeneralInfo = () => {
   const [isFavorite, setIsFavorite] = useState(false);
   const [activeSpec, setActiveSpec] = useState(null);
   const [selectedSpec, setSelectedSpec] = useState(null);
+  const [specs, setSpecs] = useState([])
 
   const { user, isAuthenticated } = useAuthContext();
   const { data: productData } = useReadProductDetailBySlug(slug);
@@ -29,7 +34,7 @@ const ProductGeneralInfo = () => {
   const { mutateAsync: unLike } = useRemoveItemFromWishlist();
   const { mutateAsync: addToCart } = useAddCartItem();
 
-  const specs = Array.isArray(productData?.specs) ? productData.specs : [];
+
   const { data: productReview, isPending: isLoadingReviews } = useReadAllReviewsAdmin(specs?._id);
 
   useEffect(() => {
@@ -70,11 +75,12 @@ const ProductGeneralInfo = () => {
   };
 
   useEffect(() => {
+    setSpecs(productData?.specs ? productData.specs : [])
     if (specs && specs.length > 0) {
       setSelectedSpec(specs[0]);
       setActiveSpec(specs[0]._id);
     }
-  }, [specs]);
+  }, [productData, specs])
 
   const handleSpecChange = (spec) => {
     setSelectedSpec(spec);
@@ -99,7 +105,8 @@ const ProductGeneralInfo = () => {
   };
 
   const averageRating = calculateAverageRating(productReview);
-
+  console.log(productData);
+  
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
       {/* Product Name and Favorite Button */}
@@ -124,43 +131,46 @@ const ProductGeneralInfo = () => {
       </Typography>
       <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
         {specs.map((spec) => {
-          const storageSpec = spec.specifications.find(
-            (s) => s.key === "671f02986fb968f4d374e5ce"
-          );
-          const storageCapacity = storageSpec ? storageSpec.value : "N/A";
+          const specName = spec.specifications.length >= 2 ?
+            spec.specifications[0].value + ', ' + spec.specifications[1].value :
+            spec.specifications[0].value
           const originalPrice = spec.price;
           const discountPrice = originalPrice * (1 - (productData.specs.discountPercentage || 0) / 100);
 
           return (
             <Button
               key={spec._id}
-              variant="outlined"
+              variant={
+                selectedSpec && spec._id === selectedSpec?._id ?
+                'contained' : 'outlined'
+              }
               onClick={() => handleSpecChange(spec)}
               sx={{
                 mb: 1,
                 mr: 1,
                 display: "flex",
                 justifyContent: "space-between",
-                width: 300,
+                width: 180,
                 borderRadius: 4,
-                borderColor: activeSpec === spec._id ? "red" : "grey.500",
-                color: activeSpec === spec._id ? "red" : "inherit",
+                borderWidth: 2,
+                // borderColor: activeSpec === spec._id ? "red" : "grey.500",
+                // color: activeSpec === spec._id ? "red" : "inherit",
                 flexDirection: "column",
                 textAlign: "left",
               }}
             >
-              <Typography variant="body2">{spec.specificationName}</Typography>
-              <Typography variant="body2" sx={{ ml: 1 }}>
-                {storageCapacity}
+              <Typography variant="content">{spec.specificationName}</Typography>
+              <Typography variant="content" sx={{ ml: 1 }}>
+                {specName}
               </Typography>
               <Box sx={{ display: "flex", flexDirection: "column", textAlign: "right" }}>
                 {productData.discountPercentage > 0 && (
                   <Typography variant="body2" sx={{ textDecoration: "line-through" }}>
-                    {originalPrice}{" "}VND
+                    {toCurrency(discountPrice)}
                   </Typography>
                 )}
                 <Typography variant="body2" sx={{ fontWeight: "bold" }}>
-                  {discountPrice.toFixed(2)}{" "}VND
+                    {toCurrency(originalPrice)}
                 </Typography>
               </Box>
             </Button>
@@ -172,17 +182,17 @@ const ProductGeneralInfo = () => {
       <Box sx={{ display: "flex", alignItems: "center", mt: 3 }}>
         {selectedSpec && selectedSpec.discountPercentage > 0 ? (
           <>
-            <Typography variant="h6" sx={{ color: "red", fontWeight: "bold", fontSize: "1.5rem" }}>
-              {selectedSpec.price * (1 - selectedSpec.discountPercentage / 100)}{" "}VND
+            <Typography variant="h6" sx={{ color: "red" }}>
+              {toCurrency(selectedSpec.price * (1 - selectedSpec.discountPercentage / 100))}
             </Typography>
             <Typography variant="body2" sx={{ textDecoration: "line-through", color: "gray", ml: 2 }}>
-              {selectedSpec.price}{" "}VND
+              {toCurrency(selectedSpec.price)}
             </Typography>
           </>
         ) : (
           selectedSpec && (
-            <Typography variant="h6" sx={{ color: "red", fontWeight: "bold", fontSize: "1.5rem" }}>
-              {selectedSpec.price}{" "}VND
+            <Typography variant="h6" sx={{ color: "red" }}>
+              {toCurrency(selectedSpec.price)}
             </Typography>
           )
         )}
