@@ -105,7 +105,6 @@ const ProductGeneralInfo = () => {
   };
 
   const averageRating = calculateAverageRating(productReview);
-  console.log(productData);
   
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>

@@ -57,8 +57,6 @@ const ManagePersonalOrder = () => {
     ordersData?.filter((order) => order.processStatus === "canceled") || [];
 
   const handleTabChange = (event, newValue) => setCurrentTab(newValue);
-
-  console.log(ordersData);
   
 
   const handleViewDetails = (orderId) => {
@@ -88,7 +86,7 @@ const ManagePersonalOrder = () => {
       alert("Có lỗi xảy ra khi hủy đơn hàng. Vui lòng thử lại.");
     }
   };
-
+  
   const renderOrders = (orders) => {
     if (orders.length === 0) {
       return <Typography>Không có đơn hàng nào.</Typography>;
@@ -140,13 +138,10 @@ const ManagePersonalOrder = () => {
                         />
                       )}
                     </Box>
-                    <ListItemText
-                      primary={`Sản phẩm: ${product?.productName || "Tên không có sẵn"}`}
-                    />
                     <Typography variant="body2" color="text.secondary">
                       Ngày đặt hàng: {formattedDate}
                     </Typography>
-                    <Typography variant="body2" color="text.secondary">
+                    <Typography variant="body2" color="red">
                       Tổng cộng: {displayTotal}
                     </Typography>
                   </Grid>

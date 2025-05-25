@@ -16,14 +16,14 @@ import { Login } from './components/index.js';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { SnackbarProvider } from 'notistack'
-import { CssVarsProvider, extendTheme } from "@mui/joy";
+
 import AuthAdminProvider from "./context/AuthAdminContext.jsx";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import ManagePersonalProfile from "./_root/pages/customer/ManagePersonalProfile.jsx";
 import ManagePersonalOrder from "./_root/pages/customer/ManagePersonalOrder.jsx";
 import Product from "./_root/pages/customer/Product.jsx";
-import ProductGrid from "./components/ProductGrid/ProductGrid.jsx";
+import "./components/ProductGrid/ProductGrid.jsx";
 import GridProduct from "./_root/pages/customer/GridProduct.jsx";
 import CheckoutPage from "./_root/pages/customer/CheckoutPage.jsx"
 
@@ -85,6 +85,7 @@ function App() {
       <Container
         component='main'
         maxWidth='xl'
+        sx={{backgroundColor:'#f2f4f7', minHeight: '100%'}}
         disableGutters
       >
 

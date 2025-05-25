@@ -184,20 +184,13 @@ function CheckoutPage() {
           Đơn đặt hàng
         </Typography>
         <Box component="form" onSubmit={handleSubmit}>
-          <TextField
-            fullWidth
-            label="ID Người dùng"
-            name="userId"
-            value={orderData.userId}
-            margin="normal"
-            disabled
-          />
           <FormControl fullWidth margin="normal">
             <InputLabel>Trạng thái thanh toán</InputLabel>
             <Select
               name="paymentStatus"
               value={orderData.paymentStatus}
               onChange={handleChange}
+              disabled
             >
               <MenuItem value="unpaid">Chưa thanh toán</MenuItem>
               <MenuItem value="paid">Đã thanh toán</MenuItem>
@@ -213,17 +206,9 @@ function CheckoutPage() {
               <MenuItem value="credit_card">Thẻ tín dụng</MenuItem>
               <MenuItem value="paypal">Paypal</MenuItem>
               <MenuItem value="bank_transfer">Chuyển khoản ngân hàng</MenuItem>
+              <MenuItem value="cash">Trả tiền khi nhận hàng</MenuItem>
             </Select>
           </FormControl>
-          <TextField
-            fullWidth
-            type="number"
-            label="Phí vận chuyển"
-            name="shippingCost"
-            value={orderData.shippingCost}
-            onChange={handleChange}
-            margin="normal"
-          />
           <TextField
             fullWidth
             label="Ghi chú đơn hàng"
@@ -234,30 +219,10 @@ function CheckoutPage() {
             rows={4}
             margin="normal"
           />
-          <TextField
-            fullWidth
-            type="datetime-local"
-            label="Thời gian nhận dự kiến"
-            name="expectedReceiveTime"
-            value={orderData.expectedReceiveTime}
-            onChange={handleChange}
-            margin="normal"
-            InputLabelProps={{
-              shrink: true,
-            }}
-          />
-          <TextField
-            fullWidth
-            type="datetime-local"
-            label="Thời gian nhận đơn"
-            name="takeOrderTime"
-            value={orderData.takeOrderTime}
-            onChange={handleChange}
-            margin="normal"
-            InputLabelProps={{
-              shrink: true,
-            }}
-          />
+          <Typography>
+            Thời gian nhận hàng dự kiến: {' '}
+            <span style={{fontWeight:'bold', color: '#ffd500'}}>{new Date(orderData.expectedReceiveTime).toLocaleDateString('en-GB')}</span>
+          </Typography>
           <FormControl fullWidth margin="normal">
             <InputLabel>Địa chỉ</InputLabel>
             <Select
@@ -268,30 +233,6 @@ function CheckoutPage() {
               {addressesData.map((address) => (
                 <MenuItem key={address._id} value={address._id}>
                   {`${address.address}, ${address.ward}, ${address.district}, ${address.city}`}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          <FormControl fullWidth margin="normal">
-            <InputLabel>Vouchers</InputLabel>
-            <Select
-              name="voucher"
-              multiple
-              value={orderData.voucher}
-              onChange={handleAddVoucher}
-              renderValue={(selected) =>
-                selected
-                  .map(
-                    (id) =>
-                      vouchersData.find((voucher) => voucher._id === id)
-                        ?.voucherName || id
-                  )
-                  .join(", ")
-              }
-            >
-              {vouchersData && vouchersData.map((voucher) => (
-                <MenuItem key={voucher._id} value={voucher._id}>
-                  {voucher.voucherName} - {voucher.discountPercentage}% giảm
                 </MenuItem>
               ))}
             </Select>

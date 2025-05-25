@@ -23,14 +23,11 @@ import { useAuthContext } from "../../../context/AuthContext";
 import { enqueueSnackbar } from "notistack";
 
 const Cart = () => {
-  const { slug } = useParams();
   const { user, isAuthenticated } = useAuthContext();
   const { data: fetchedCartItems, error, isLoading } = useReadOwnCart(user?._id);
   const createCartItem = useAddCartItem();
   const { mutateAsync: updateCart } = useUpdateCart();
   const { mutateAsync: deleteCartItem } = useDeleteCartItem();
-  const { data: productData } = useReadProductDetailBySlug(slug);
-  const specs = Array.isArray(productData?.specs) ? productData.specs : [];
 
   const [cartItems, setCartItems] = useState([]);
   const [shippingFee, setShippingFee] = useState(0);
@@ -89,12 +86,6 @@ const Cart = () => {
     );
   };
 
-  useEffect(() => {
-    if (cartItems.length > 0) {
-      handleUpdateCart(cartItems);
-    }
-  }, [cartItems]);
-
   const totalAmount = cartItems.reduce(
     (acc, item) => acc + item.spec?.price * item.quantity,
     0
@@ -123,7 +114,7 @@ const Cart = () => {
   }
 
   return (
-    <Container sx={{ marginTop: "50px", paddingX: isMobile ? "8px" : "24px" }}>
+    <Container sx={{ marginTop: "50px", paddingX: isMobile ? "8px" : "24px"}}>
       <Typography
         variant="h4"
         gutterBottom

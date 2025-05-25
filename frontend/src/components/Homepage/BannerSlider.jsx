@@ -27,6 +27,8 @@ const NextArrow = (props) => {
         top: "50%", // Căn giữa theo chiều dọc
         transform: "translateY(-50%)", // Điều chỉnh cho đúng giữa chiều cao
         zIndex: 1,
+        backgroundColor:'#353535',
+        opacity: '.5'
       }}
     >
       <ArrowForwardIcon color="white" />
@@ -52,6 +54,8 @@ const PrevArrow = (props) => {
         top: "50%", // Căn giữa theo chiều dọc
         transform: "translateY(-50%)", // Điều chỉnh cho đúng giữa chiều cao
         zIndex: 1,
+        backgroundColor:'#353535',
+        opacity: '.5'
       }}
     >
       <ArrowBackIcon color="white" />
@@ -62,8 +66,7 @@ const PrevArrow = (props) => {
 const BannerSlider = () => {
   const { data: banners, isLoading, isError, error } = useReadAllCarouselAdmin();
   const settings = {
-    dots: true,
-    centerMode: true,
+     maxWidth: "100%",
     infinite: true,
     adaptiveHeight: true,
     speed: 500,
@@ -83,14 +86,14 @@ const BannerSlider = () => {
         <Link
           to={`/products/${banner.slug}`}
           key={banner.id || index}
-          style={{ textDecoration: "none" }}
+          style={{ textDecoration: "none", width: '100%',  maxWidth: "100%"  }}
         >
           <Card
             sx={{
-              padding: "8px",
               boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
               borderRadius: "12px",
               textAlign: "center",
+                maxWidth: "100%",
               width: "100%"
             }}
           >
@@ -99,14 +102,19 @@ const BannerSlider = () => {
               image={banner.imgUrl}
               alt={banner.title}
               sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: 'center',
-                margin: "0 auto",
+                // display: "flex",
+                // justifyContent: "center",
+                // alignItems: 'center',
+                // margin: "0 auto",
                 width: "100%", // Độ rộng 50% của container
-                height: "auto",
+                // height: "320px",
+                // objectFit: "contain",
+                // borderRadius: "8px",
+                display: "block",
+                margin: "0 auto",
+                maxWidth: "100%",
+                height: "320px",
                 objectFit: "contain",
-                maxHeight: "320px",
                 borderRadius: "8px",
               }}
             />

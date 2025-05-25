@@ -58,6 +58,7 @@ const ProductCard = ({ product, wishList, customer, isLoggedIn }) => {
         minWidth: 224,
         maxWidth: 224,
         margin: "0 auto",
+        paddingBottom: '4px',
         display: "flex",
         flexDirection: "column",
         height: "400px", // Chiều cao cố định cho các thẻ card
@@ -65,16 +66,16 @@ const ProductCard = ({ product, wishList, customer, isLoggedIn }) => {
     >
       <Link
         to={`/product/${product.slug}`}
-        style={{ textDecoration: "none", color: "inherit" }}
+        style={{ textDecoration: "none", color: "inherit"}}
       >
         <CardMedia
           component="img"
           image={product.imageURLs[0]}
           alt={product.productName}
           sx={{
-            width: "100%", // Chiều rộng cố định
-            height: "224px", // Chiều cao cố định
-            objectFit: "contain", // Đảm bảo hình ảnh được cắt mà không bị méo
+            width: "224px",
+            height: '224px', // Chiều rộng cố định
+            objectFit: "cover", // Đảm bảo hình ảnh được cắt mà không bị méo
             borderRadius: "8px 8px 0 0",
           }}
         />
@@ -88,14 +89,14 @@ const ProductCard = ({ product, wishList, customer, isLoggedIn }) => {
           }}
         >
           <Box>
-            <TruncatedTypography lineClamp={2} variant="content" fontSize='0.8rem' lineHeight="1.2" mb={0.2} component="div">
+            <TruncatedTypography lineClamp={2} variant="content" fontSize='1rem' lineHeight="1.2" mb={0.2} component="div">
               {product.productName}
             </TruncatedTypography>
             <TruncatedTypography
               variant="body2"
               color="text.secondary"
               fontSize='0.8rem'
-              lineClamp={2}
+              lineClamp={1}
             >
               {product.description}
             </TruncatedTypography>
@@ -126,7 +127,7 @@ const ProductCard = ({ product, wishList, customer, isLoggedIn }) => {
             product.specs[0]?.discountPercentage &&
             <Typography
               fontSize="1rem"
-              variant="h1"
+              variant="h6"
               style={{
                 color: "red"
               }}
@@ -152,7 +153,7 @@ const ProductCard = ({ product, wishList, customer, isLoggedIn }) => {
         >
           {isFavorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
         </IconButton>
-        <Typography variant="body2">{product.productCode}</Typography>
+        <Typography variant="body2">Đã bán: {product.purchaseCount}</Typography>
       </Box>
     </Card>
   );

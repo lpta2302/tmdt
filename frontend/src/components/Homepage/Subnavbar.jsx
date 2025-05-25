@@ -58,6 +58,7 @@ const SubNavbar = () => {
         right: 0,
         boxShadow: "0 -2px 8px rgba(0, 0, 0, 0.2)",
         zIndex: 1000,
+        backgroundColor:'white'
       }}
     >
       {categories.map((category) => (
@@ -79,7 +80,8 @@ const SubNavbar = () => {
         boxShadow: "0 0 8px rgba(0,0,0,0.2)",
         borderRadius: "3px",
         overflowX: "auto",
-        height:'360px'
+        height:'320px',
+        backgroundColor: 'white !important'
       }}
     >
       <List sx={{ py: 0 }}>

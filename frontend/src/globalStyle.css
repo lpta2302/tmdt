@@ -1,3 +1,11 @@
+body{
+    background-color: #f2f4f7 !important;
+    min-height: 100vh !important;
+}
+* {
+  scrollbar-width: thin; /* hoặc 'none' nếu muốn ẩn luôn */
+  scrollbar-color: rgba(0,0,0,0.2) transparent;
+}
 a {
     text-decoration: none;
 }
